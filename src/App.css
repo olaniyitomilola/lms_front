@@ -156,3 +156,25 @@ form input[type="button"]{
   cursor: pointer;
   margin-left: 10px;
 }
+#signUpForm{
+  display: flex;
+  flex-direction: column;align-items: center;
+}
+#signUpForm #formController{
+  margin-top: 30px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+#signUpForm #formController input{
+  width: clamp(300px, 100%, 350px);
+}
+
+#signUpForm  input[type="button"] {
+  width: clamp(300px,100%,350px);
+  margin-top: 20px;
+  cursor: pointer;
+}

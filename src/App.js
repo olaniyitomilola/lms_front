@@ -10,7 +10,7 @@ import './App.css';
 const App =()=> {
   return (
     <div className="App">
-       <SignInPage isSignIn={true} signInImage={signInImage} signUpImage={signUpImage}/>
+       <SignInPage signInImage={signInImage} signUpImage={signUpImage}/>
        
     </div>
   );
