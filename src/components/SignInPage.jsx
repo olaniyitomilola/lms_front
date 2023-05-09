@@ -1,11 +1,8 @@
 import logo from '../assets/logo.svg'
 import { useState } from 'react'
+import {get,post} from '../RequestHandlers'
 
-
-
-
-
-const SignInPage =({signInImage,signUpImage})=>{
+const SignInPage =({onLogged, signInImage,signUpImage})=>{
     const [activePage,setActivePage] = useState('sign-in-page')
     const handleClick = (act)=>{
         setActivePage(act)
@@ -21,13 +18,36 @@ const SignInPage =({signInImage,signUpImage})=>{
                 <div id = "imageHalf" style={backgroundstyle} ></div>
                 <div className="otherHalf">
                     <img width={`100px`} height={`50px`} src={logo} alt="logo" />
-                    {activePage === 'sign-in-page'? <FormSignIn onClick={()=>handleClick('sign-up-page')}/> : <FormSignUp onClick={()=>handleClick('sign-in-page')}/>}
+                    {activePage === 'sign-in-page'? <FormSignIn onClick={()=>handleClick('sign-up-page')} onLogged={onLogged}/> : <FormSignUp onClick={()=>handleClick('sign-in-page')}/>}
                 </div>
 
             </div>
         )
 }
-const FormSignIn=({onClick})=>{
+const FormSignIn=({onClick,onLogged})=>{
+
+    const HandleLogin=async ()=>{
+        const email = document.querySelector('#signInForm #signInEmail');
+        const password = document.getElementById('password');
+        
+        if(!email.value || !password.value){
+            alert("All fields required")
+        }else{
+            let form = {
+                'email' : email.value,
+                'password':password.value
+            }
+            console.log(form)
+            let response = await post('https://localhost:7177/api/user/login',form)
+            if(response.token){
+                sessionStorage.setItem('identity',response.token)
+                onLogged();
+
+            }else{
+                alert('Something went wrong')
+            }
+        }
+    }    
     return(
         <div className="signInFrag">
             <div id="signInTitle">Log In</div>
@@ -36,7 +56,7 @@ const FormSignIn=({onClick})=>{
                 <input type="email" name="email" id="signInEmail" />
                 <label htmlFor="password">Password</label>
                 <input type="password" name="password" id="password" />
-                <input type="button" value="Log in" id="loginButton"/>
+                <input onClick={()=>HandleLogin()} type="button" value="Log in" id="loginButton"/>
                 <div id='forgotpass'>Forgot password?</div>
                 <div id='createAccount'>Don't have a Account? <span onClick={onClick}>Create Account</span></div>
             </form>

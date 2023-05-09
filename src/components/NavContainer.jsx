@@ -2,10 +2,11 @@ import logo from '../assets/logo.svg';
 import Overview from'../assets/overview'
 import Profile from '../assets/profile'
 import Courses from '../assets/courses'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-const NavContainer =()=> {
-  const [activeNav,setActive] = useState('nav-item-1');
+const NavContainer =(props)=> {
+
+
   const handleClick = (navlink)=>{
         setActive(navlink);
   }
@@ -13,9 +14,9 @@ const NavContainer =()=> {
     <div className="navContainer">
         <NavLogo/>
         <div className='nav'>
-            <NavLink active = {activeNav === "nav-item-1"} linkName = 'Overview' src = {<Overview/>}onClick={()=>handleClick('nav-item-1')} />
-            <NavLink active = {activeNav === "nav-item-2"} linkName = 'Profile' src = {<Profile/>} onClick={()=>handleClick('nav-item-2')}/>
-            <NavLink active = {activeNav === "nav-item-3"} linkName = 'Courses' src = {<Courses/>} onClick={()=>handleClick('nav-item-3')} />
+            <NavLink active = {props.activeNav === "Overview"} linkName = 'Overview' src = {<Overview/>}onClick={()=>props.handleClick('Overview')} />
+            <NavLink active = {props.activeNav === "Profile"} linkName = 'Profile' src = {<Profile/>} onClick={()=>props.handleClick('Profile')}/>
+            <NavLink active = {props.activeNav === "Courses"} linkName = 'Courses' src = {<Courses/>} onClick={()=>props.handleClick('Courses')} />
         </div>
     </div>
   );
