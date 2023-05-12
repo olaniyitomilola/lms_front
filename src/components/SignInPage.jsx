@@ -65,6 +65,56 @@ const FormSignIn=({onClick,onLogged})=>{
 }
 
 const FormSignUp = ({onClick})=>{
+    const HandleSignUp= async ()=>{
+      const firstName = document.getElementById("firstName").value;
+        const lastName = document.getElementById("lastName").value;
+        const email = document.getElementById("regEmail").value;
+        const phone = document.getElementById("phone").value;
+        const password = document.getElementById("password").value;
+        const confirmPassword = document.getElementById("confirmPassword").value;
+
+        // Validate input values
+        if (firstName === "" || lastName === "" || email === "" || phone === "" || password === "" || confirmPassword === "") {
+            alert("Please fill in all required fields.");
+            return;
+        }
+
+        if (password !== confirmPassword) {
+            alert("Passwords do not match.");
+            return;
+        }
+
+        // Send the sign up request to the server
+        
+        let response = await post('https://localhost:7177/api/user/login', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email,
+                    phone: phone,
+                    password: password
+                })
+            })
+        if(response.ok){
+                alert("Network response was not ok");
+
+        }else{
+            response = response.json();
+            if(response.token){
+                sessionStorage.setItem('identity',response.token)
+                onLogged();
+
+            }else{
+                alert('Something went wrong')
+            }
+        }
+
+      
+    }
 
    return (
         <div className='signInFrag'>
@@ -79,7 +129,7 @@ const FormSignUp = ({onClick})=>{
                     <input type="password" name='password' id='password' placeholder='Password'/>
                     <input type="password" id='confirmPassword' placeholder='Confirm Password'/>
                 </div>
-                <input type="button"value='create Account' />
+                <input type="button"value='create Account' onClick={()=>{HandleSignUp()}} />
                 <div id='createAccount'>Already have an Account? <span onClick={onClick}>Log in</span></div>
                 
 
