@@ -7,9 +7,6 @@ import { useEffect, useState } from 'react';
 const NavContainer =(props)=> {
 
 
-  const handleClick = (navlink)=>{
-        setActive(navlink);
-  }
   return (
     <div className="navContainer">
         <NavLogo/>

@@ -36,8 +36,8 @@ const App =()=> {
 
   },[])
 
-  const logHandler = ()=>{
-    setIsLoggedIn(true)
+  const logHandler = (val)=>{
+    setIsLoggedIn(val)
   }
   const [page, setPage] = useState('Overview');
 
@@ -51,7 +51,7 @@ const App =()=> {
 
       {isLoggedIn? 
       <><NavContainer activeNav = {page} handleClick = {pageHandler}/>
-      <Dashboard ActiveNav = {page} /> </>: 
+      <Dashboard logged = {logHandler} ActiveNav = {page} /> </>: 
       <SignInPage onLogged={logHandler} signInImage={signInImage} signUpImage={signUpImage}/> 
       }
        

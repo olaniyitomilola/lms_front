@@ -271,3 +271,38 @@ form input[type="button"]{
   justify-content: center;
   border-radius: 10px;
 }
+#profileEmail{
+  margin-top: 30px;
+  padding: 20px;
+  border:1px solid #e0dcdc;
+  background-color: white;
+  color: #4ec98f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  border-radius: 10px;
+}
+.contributorDash{
+  margin-top: 40px;
+  width: clamp(500px, 100%, 1400px);
+}
+#contributorbtn button{
+  padding: 10px 34px;
+  background-color: #4ec98f;
+  color: white;
+  border: 1px solid #e0dcdc;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.myContribution{
+  margin-top: 30px;
+  font-size:16px;
+  color: #007aff;
+}
+#myContit{
+  font-size: 16px;
+  color: #4ec98f;
+  font-weight: 700;
+}

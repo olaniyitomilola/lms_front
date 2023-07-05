@@ -20,7 +20,6 @@ const SignInPage =({onLogged, signInImage,signUpImage})=>{
                     <img width={`100px`} height={`50px`} src={logo} alt="logo" />
                     {activePage === 'sign-in-page'? <FormSignIn onClick={()=>handleClick('sign-up-page')} onLogged={onLogged}/> : <FormSignUp onClick={()=>handleClick('sign-in-page')}/>}
                 </div>
-
             </div>
         )
 }
@@ -41,7 +40,7 @@ const FormSignIn=({onClick,onLogged})=>{
             let response = await post('https://localhost:7177/api/user/login',form)
             if(response.token){
                 sessionStorage.setItem('identity',response.token)
-                onLogged();
+                onLogged(true);
 
             }else{
                 alert('Something went wrong')
@@ -64,7 +63,7 @@ const FormSignIn=({onClick,onLogged})=>{
     )
 }
 
-const FormSignUp = ({onClick})=>{
+const FormSignUp = ({onClick , onLogged})=>{
     const HandleSignUp= async ()=>{
       const firstName = document.getElementById("firstName").value;
         const lastName = document.getElementById("lastName").value;
@@ -78,35 +77,29 @@ const FormSignUp = ({onClick})=>{
             alert("Please fill in all required fields.");
             return;
         }
+        //validate email format
 
         if (password !== confirmPassword) {
             alert("Passwords do not match.");
             return;
         }
-
         // Send the sign up request to the server
-        
-        let response = await post('https://localhost:7177/api/user/login', {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    firstName: firstName,
-                    lastName: lastName,
-                    email: email,
-                    phone: phone,
-                    password: password
-                })
-            })
-        if(response.ok){
+        let form = {
+                    'FirstName': firstName,
+                    'LastName': lastName,
+                    'Email': email,
+                    'PhoneNumber': phone,
+                    'Password': password
+        }
+        let response = await post('https://localhost:7177/api/user/signup', form)
+        if(!response.ok){
                 alert("Network response was not ok");
 
         }else{
             response = response.json();
             if(response.token){
                 sessionStorage.setItem('identity',response.token)
-                onLogged();
+                onLogged(true);
 
             }else{
                 alert('Something went wrong')
@@ -131,10 +124,6 @@ const FormSignUp = ({onClick})=>{
                 </div>
                 <input type="button"value='create Account' onClick={()=>{HandleSignUp()}} />
                 <div id='createAccount'>Already have an Account? <span onClick={onClick}>Log in</span></div>
-                
-
-            
-            
             </form>
         </div>
     )
